@@ -16,7 +16,7 @@ jobs:
     tests:
       runs-on: ubuntu-latest
 
-      container: demo-rest-api
+      container: ubuntu-latest
       services:
         postgres:
           image: postgres
