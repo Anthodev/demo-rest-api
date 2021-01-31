@@ -57,13 +57,15 @@ jobs:
               ${{ runner.os }}-php-
         - name: Install dependencies
           working-directory: ./app
+          env:
+            DATABASE_URL: postgres://$DB_USER:$DB_PWD@{{ job.services.postgres }}:5432/$DB_NAME?sslmode=disable&charset=utf8
           run: |
             composer install --no-progress --prefer-dist --optimize-autoloader
 
         - name: Run phpunit for app
           working-directory: ./app
           env:
-            DATABASE_URL: postgres://$DB_USER:$DB_PWD@{{ job.services.postgres }}:5432/app?sslmode=disable&charset=utf8
+            DATABASE_URL: postgres://$DB_USER:$DB_PWD@{{ job.services.postgres }}:5432/$DB_NAME?sslmode=disable&charset=utf8
           run: vendor/bin/simple-phpunit
 
         - name: Run coding standards checks
