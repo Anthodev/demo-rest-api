@@ -37,6 +37,12 @@ class Answer
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Poll::class, inversedBy="answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $poll;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Answer
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPoll(): ?Poll
+    {
+        return $this->poll;
+    }
+
+    public function setPoll(?Poll $poll): self
+    {
+        $this->poll = $poll;
 
         return $this;
     }
