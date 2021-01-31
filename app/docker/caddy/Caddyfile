@@ -1,0 +1,22 @@
+{
+    # Debug
+    debug
+
+    # HTTP/3 support
+    servers {
+        protocol {
+            experimental_http3
+        }
+    }
+}
+
+{$SERVER_NAME}
+
+log
+
+root * /var/www/html/public
+
+php_fastcgi app-php:9000
+
+encode gzip zstd
+file_server

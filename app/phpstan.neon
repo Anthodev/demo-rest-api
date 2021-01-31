@@ -1,0 +1,33 @@
+parameters:
+    level: 5
+    reportUnmatchedIgnoredErrors: false
+    
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+        console_application_loader: build/phpstan/console-loader.php
+
+    checkMissingIterableValueType: true
+
+    doctrine:
+        objectManagerLoader: build/phpstan/doctrine-orm-bootstrap.php
+
+    paths:
+        - src
+        - tests
+
+    ignoreErrors:
+        - '#Should not use node with type "Expr_Exit", please change the code.#' # warnings for "die()"
+        - '#Should not use node with type "Stmt_Echo", please change the code.#' # warnings for "echo()"
+        - '#Should not use function "print_r", please change the code.#'         # warnings for "print_r()"
+        - '#Should not use function "var_dump", please change the code.#'        # warnings for "var_dump()"
+        - '#Should not use function "phpinfo", please change the code.#'         # warnings for "phpinfo()"
+        - '#Service "http_client" is not registered in the container.#'          # Probably a Symfony plugin bug
+
+        -
+            # Getter/Setting type functions are not handled well by phpstan
+            message: '#Call to function#'
+            paths:
+                - tests/bootstrap.php
+
+    bootstrapFiles:
+        - vendor/bin/.phpunit/phpunit/vendor/autoload.php

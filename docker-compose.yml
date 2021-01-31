@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  app:
+    image: thecodingmachine/php:8.0-v4-fpm
+    container_name: "app-php"
+    depends_on:
+      - app-db
+    volumes:
+      - ./app:/var/www/html:rw,cached
+    environment:
+      APP_ENV: "${APP_DEV}"
+      DATABASE_URL: "postgres://${DB_USER}:${DB_PWD}@app-db:5432/app?sslmode=disable&charset=utf8"
+      PHP_EXTENSION_PGSQL: 1
+      PHP_EXTENSION_PDOPGSQL: 1
+      PHP_EXTENSION_INTL: 1
+      PHP_EXTENSION_GD: 1
+      PHP_INI_MEMORY_LIMIT: -1
+      # PHP_EXTENSION_XDEBUG: 1
+      # PHP_INI_XDEBUG__REMOTE_AUTOSTART: 1
+
+      STARTUP_COMMAND_1: composer install
+      STARTUP_COMMAND_2: echo 'alias sf="php bin/console"' >> ~/.bashrc
+      STARTUP_COMMAND_3: echo 'alias phpunit="php vendor/bin/simple-phpunit"' >> ~/.bashrc
+    restart: unless-stopped
+
+  caddy:
+    image: caddy
+    container_name: "app-caddy"
+    volumes:
+      - ./app:/var/www/html:ro
+      - ./app/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      # HTTP
+      - target: 80
+        published: 80
+        protocol: tcp
+      # HTTPS
+      - target: 443
+        published: 443
+        protocol: tcp
+      # HTTP/3
+      - target: 443
+        published: 443
+        protocol: udp
+    restart: unless-stopped
+
+  app-db:
+    image: postgres
+    container_name: "app-db"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PWD}
+    volumes:
+      - ./app/docker/db/data:/var/lib/postgresql/data:rw
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:

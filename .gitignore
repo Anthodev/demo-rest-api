@@ -1,0 +1,10 @@
+!.keep
+
+.env
+.env.*
+.env.*.local
+!.env.dist
+
+!build/
+
+app/docker/db/data
