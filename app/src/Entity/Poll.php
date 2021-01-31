@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\PollRepository;
@@ -13,62 +15,73 @@ use Doctrine\ORM\Mapping as ORM;
 class Poll
 {
     /**
+     * @var int|null
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private string $title;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $question;
+    private string $question;
 
     /**
+     * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $endDate;
+    private ?\DateTimeInterface $endDate;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $doUsersMustBeConnected;
+    private bool $doUsersMustBeConnected;
 
     /**
+     * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     /**
+     * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     /**
+     * @var User
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="polls")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $owner;
+    private User $owner;
 
     /**
+     * @var Collection|User[]
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="pollsParticipated")
      */
-    private $participants;
+    private Collection $participants;
 
     /**
+     * @var Collection|Answer[]
      * @ORM\OneToMany(targetEntity=Answer::class, mappedBy="poll", orphanRemoval=true)
      */
-    private $answers;
+    private Collection $answers;
 
     /**
+     * @var int
      * @ORM\Column(type="integer")
      */
-    private $totalVotes;
+    private int $totalVotes;
 
     public function __construct()
     {
