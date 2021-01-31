@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -14,57 +16,67 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
+     * @var int|null
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=32)
      */
-    private $username;
+    private string $username;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $plainPassword;
+    private ?string $plainPassword;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private string $email;
 
     /**
+     * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     /**
+     * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     /**
+     * @var Role
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $role;
+    private Role $role;
 
     /**
+     * @var Collection|Poll[]
      * @ORM\OneToMany(targetEntity=Poll::class, mappedBy="owner")
      */
-    private $polls;
+    private Collection $polls;
 
     /**
+     * @var Collection|Poll[]
      * @ORM\ManyToMany(targetEntity=Poll::class, mappedBy="participants")
      */
-    private $pollsParticipated;
+    private Collection $pollsParticipated;
 
     public function __construct()
     {
