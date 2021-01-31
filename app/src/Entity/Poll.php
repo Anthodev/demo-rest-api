@@ -74,6 +74,8 @@ class Poll
     {
         $this->participants = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        $this->doUsersMustBeConnected = false;
+        $this->totalVotes = 0;
     }
 
     public function getId(): ?int

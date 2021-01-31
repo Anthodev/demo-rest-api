@@ -43,6 +43,11 @@ class Answer
      */
     private $poll;
 
+    public function __construct()
+    {
+        $this->votes = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
