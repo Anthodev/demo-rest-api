@@ -16,6 +16,7 @@ jobs:
     tests:
       runs-on: ubuntu-latest
 
+      container: demo-rest-api
       services:
         postgres:
           image: postgres
@@ -74,4 +75,3 @@ jobs:
           run: |
             vendor/bin/phpstan analyse
             vendor/bin/ecs check
-
