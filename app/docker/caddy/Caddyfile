@@ -10,13 +10,13 @@
     }
 }
 
-{$SERVER_NAME}
+{$PROJECT_HOST}
 
 log
 
 root * /var/www/html/public
 
-php_fastcgi app-php:9000
+php_fastcgi {$PROJECT_NAME}-php:9000
 
 encode gzip zstd
 file_server
