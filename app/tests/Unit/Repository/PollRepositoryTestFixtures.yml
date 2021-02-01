@@ -1,15 +1,49 @@
-include:
-  - UserRepositoryTestFixtures.yml
+App\Entity\Role:
+  role_admin:
+    name: "admin"
+    code: "ROLE_ADMIN"
+    createdAt: '<dateTime()>'
+
+  role_user:
+    name: "user"
+    code: "ROLE_USER"
+    createdAt: '<dateTime()>'
+
+App\Entity\User:
+  admin:
+    username: 'admin'
+    email: 'admin@noreply.local'
+    password: 'test1234'
+    role: '@role_admin'
+    createdAt: '<dateTime()>'
+  
+  user{2..5}:
+    username (unique): '<current()>'
+    email (unique): '<email()>'
+    password: '<password()>'
+    role: '@role*'
+    createdAt (unique): '<dateTime()>'
 
 App\Entity\Answer:
   answer{1..25}:
     name: '<words(<randomDigitNotNull()>, true)>'
-    votes: totalVotes: '<randomNumber()>'
-    createdAt: createdAt: '<dateTime()>'
+    votes: '<randomNumber()>'
+    createdAt: '<dateTime()>'
     poll: '@poll*'
+    createdAt (unique): '<dateTime()>'
 
 App\Entity\Poll:
-  poll{1..10} (extends user):
+  poll_test:
+    title: 'Do my test poll works?'
+    question: 'This is just a test to see if the poll is inserted in the db'
+    endDate: '<dateTime()>'
+    doUsersMustBeConnected: 'false'
+    owner: '@admin'
+    participants: '<numberBetween(1, 15)>x @user*'
+    answers: '<numberBetween(1, 2)>x @answer*'
+    totalVotes: '42'
+    createdAt (unique): '<dateTime()>'
+  poll{2..10}:
     title: '<words(<randomDigitNotNull()>, true)>'
     question: '<sentence()>'
     endDate: '75%? <dateTime()>'
@@ -19,3 +53,4 @@ App\Entity\Poll:
     participants: '<numberBetween(1, 15)>x @user*'
     answers: '<numberBetween(1, 3)>x @answer*'
     totalVotes: '<randomNumber()>'
+    createdAt (unique): '<dateTime()>'

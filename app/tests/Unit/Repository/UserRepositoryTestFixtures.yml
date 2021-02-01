@@ -18,7 +18,7 @@ App\Entity\User:
     createdAt: '<dateTime()>'
   
   user{2..5}:
-    username (unique): '<userName()>'
+    username (unique): '<current()>'
     email (unique): '<email()>'
     password: '<password()>'
     role: '@role*'
