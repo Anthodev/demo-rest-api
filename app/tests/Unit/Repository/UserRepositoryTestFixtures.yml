@@ -2,12 +2,12 @@ App\Entity\Role:
   role_admin:
     name: "admin"
     code: "ROLE_ADMIN"
-    createdAt: <dateTime()>
+    createdAt: '<dateTime()>'
 
   role_user:
     name: "user"
     code: "ROLE_USER"
-    createdAt: <dateTime()>
+    createdAt: '<dateTime()>'
 
 App\Entity\User:
   admin:
@@ -15,11 +15,11 @@ App\Entity\User:
     email: 'admin@noreply.local'
     password: 'test1234'
     role: '@role_admin'
-    createdAt: <dateTime()>
+    createdAt: '<dateTime()>'
   
   user{2..5}:
-    username: <userName()>
-    email: <email()>
-    password: <password()>
+    username (unique): '<userName()>'
+    email (unique): '<email()>'
+    password: '<password()>'
     role: '@role*'
-    createdAt: <dateTime()>
+    createdAt (unique): '<dateTime()>'

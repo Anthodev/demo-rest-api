@@ -1,0 +1,21 @@
+include:
+  - UserRepositoryTestFixtures.yml
+
+App\Entity\Answer:
+  answer{1..25}:
+    name: '<words(<randomDigitNotNull()>, true)>'
+    votes: totalVotes: '<randomNumber()>'
+    createdAt: createdAt: '<dateTime()>'
+    poll: '@poll*'
+
+App\Entity\Poll:
+  poll{1..10} (extends user):
+    title: '<words(<randomDigitNotNull()>, true)>'
+    question: '<sentence()>'
+    endDate: '75%? <dateTime()>'
+    doUsersMustBeConnected: '<boolean()>'
+    createdAt: '<dateTime()>'
+    owner: '@user*'
+    participants: '<numberBetween(1, 15)>x @user*'
+    answers: '<numberBetween(1, 3)>x @answer*'
+    totalVotes: '<randomNumber()>'

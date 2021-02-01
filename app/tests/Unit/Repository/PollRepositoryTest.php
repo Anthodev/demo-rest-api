@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Repository;
 
-use App\Entity\User;
+use App\Entity\Poll;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserRepositoryTest extends KernelTestCase
+class PollRepositoryTest extends KernelTestCase
 {
     private ManagerRegistry $doctrine;
 
@@ -26,7 +26,7 @@ class UserRepositoryTest extends KernelTestCase
     public function loadDb(): void
     {
         $this->loadFixtureFiles([
-            __DIR__ . '/UserRepositoryTestFixtures.yml'
+            __DIR__ . '/PollRepositoryTestFixtures.yml'
         ], false, null, 'doctrine', DoctrineOrmPurger::PURGE_MODE_TRUNCATE);
     }
 
@@ -34,21 +34,21 @@ class UserRepositoryTest extends KernelTestCase
     {
         $this->loadDb();
 
-        $users = $this->doctrine->getRepository(User::class)->findAll();
+        $polls = $this->doctrine->getRepository(Poll::class)->findAll();
 
-        $this->assertEquals(5, count($users));
+        $this->assertEquals(10, count($polls));
     }
 
-    public function testFindAdminUser(): void
+    public function testFindAdminPoll(): void
     {
         $this->loadDb();
 
-        $adminUser = $this->doctrine->getRepository(User::class)->findOneBy(['username' => 'admin']);
+        // $adminPoll = $this->doctrine->getRepository(Poll::class)->findOneBy(['pollname' => 'admin']);
 
-        $this->assertSame('admin@noreply.local', $adminUser->getEmail());
-        $this->assertSame('test1234', $adminUser->getPassword());
-        $this->assertSame('ROLE_ADMIN', $adminUser->getRole()->getCode());
-        $this->assertEquals(new \DateTime() instanceof \DateTime, $adminUser->getCreatedAt() instanceof \DateTime);
+        // $this->assertSame('admin@noreply.local', $adminPoll->getEmail());
+        // $this->assertSame('test1234', $adminPoll->getPassword());
+        // $this->assertSame('ROLE_ADMIN', $adminPoll->getRole()->getCode());
+        // $this->assertEquals(new \DateTime() instanceof \DateTime, $adminPoll->getCreatedAt() instanceof \DateTime);
 
         $this->tearDown();
     }
