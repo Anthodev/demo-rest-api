@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Repository;
 
-use App\Entity\Poll;
 use App\Entity\Answer;
-use App\Entity\User;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
