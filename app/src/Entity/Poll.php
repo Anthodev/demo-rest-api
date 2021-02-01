@@ -8,6 +8,7 @@ use App\Repository\PollRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PollRepository::class)
@@ -28,7 +29,7 @@ class Poll
      * @ORM\Column(type="string", length=255)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $title;
@@ -38,7 +39,7 @@ class Poll
      * @ORM\Column(type="string", length=255)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $question;
@@ -57,7 +58,7 @@ class Poll
      * @ORM\Column(type="boolean")
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(bool)
+     *     @Assert\Type("bool")
      * })
      */
     private bool $doUsersMustBeConnected;
@@ -105,7 +106,7 @@ class Poll
      * @ORM\Column(type="integer")
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(int)
+     *     @Assert\Type("int")
      * })
      */
     private int $totalVotes;

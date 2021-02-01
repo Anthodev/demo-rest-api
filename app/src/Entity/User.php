@@ -31,7 +31,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=32)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $username;
@@ -40,7 +40,7 @@ class User implements UserInterface, \Serializable
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\All({
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private ?string $plainPassword;
@@ -50,7 +50,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $password;

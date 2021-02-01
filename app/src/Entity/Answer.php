@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
@@ -26,7 +27,7 @@ class Answer
      * @ORM\Column(type="string", length=255)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $name;
@@ -36,7 +37,7 @@ class Answer
      * @ORM\Column(type="integer")
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(int)
+     *     @Assert\Type("int")
      * })
      */
     private int $votes;

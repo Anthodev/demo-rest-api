@@ -8,6 +8,7 @@ use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
@@ -28,7 +29,7 @@ class Role
      * @ORM\Column(type="string", length=32)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $name;
@@ -38,7 +39,7 @@ class Role
      * @ORM\Column(type="string", length=16)
      * @Assert\All({
      *     @Assert\NotBlank,
-     *     @Assert\Type(string)
+     *     @Assert\Type("string")
      * })
      */
     private string $code;
