@@ -22,6 +22,7 @@ parameters:
         - '#Should not use function "var_dump", please change the code.#'        # warnings for "var_dump()"
         - '#Should not use function "phpinfo", please change the code.#'         # warnings for "phpinfo()"
         - '#Service "http_client" is not registered in the container.#'          # Probably a Symfony plugin bug
+        - '#Parameter .+? \$em of class Doctrine\\Common\\DataFixtures\\Purger\\ORMPurger constructor expects Doctrine\\ORM\\EntityManagerInterface\|null, Doctrine\\Persistence\\ObjectManager given.#'
 
         -
             # Getter/Setting type functions are not handled well by phpstan

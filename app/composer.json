@@ -43,6 +43,8 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "liip/test-fixtures-bundle": "^1.11",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^0.12.70",
         "phpstan/phpstan-doctrine": "^0.12.30",
@@ -57,7 +59,8 @@
         "symfony/stopwatch": "^5.2",
         "symfony/var-dumper": "^5.2",
         "symfony/web-profiler-bundle": "^5.2",
-        "symplify/easy-coding-standard": "^9.0"
+        "symplify/easy-coding-standard": "^9.0",
+        "theofidry/alice-data-fixtures": "^1.4"
     },
     "config": {
         "optimize-autoloader": true,

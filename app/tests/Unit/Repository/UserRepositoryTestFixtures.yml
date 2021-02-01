@@ -1,0 +1,25 @@
+App\Entity\Role:
+  role_admin:
+    name: "admin"
+    code: "ROLE_ADMIN"
+    createdAt: <dateTime()>
+
+  role_user:
+    name: "user"
+    code: "ROLE_USER"
+    createdAt: <dateTime()>
+
+App\Entity\User:
+  admin:
+    username: 'admin'
+    email: 'admin@noreply.local'
+    password: 'test1234'
+    role: '@role_admin'
+    createdAt: <dateTime()>
+  
+  user{2..5}:
+    username: <userName()>
+    email: <email()>
+    password: <password()>
+    role: '@role*'
+    createdAt: <dateTime()>
