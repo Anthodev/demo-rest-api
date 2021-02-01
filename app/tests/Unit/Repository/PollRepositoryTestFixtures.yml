@@ -25,10 +25,15 @@ App\Entity\User:
     createdAt (unique): '<dateTime()>'
 
 App\Entity\Answer:
-  answer{1..25}:
+  answer_test:
+    name: 'Test Answer'
+    votes: '13'
+    createdAt: '<dateTime()>'
+    poll: '@poll_test'
+
+  answer{2..25}:
     name: '<words(<randomDigitNotNull()>, true)>'
     votes: '<randomNumber()>'
-    createdAt: '<dateTime()>'
     poll: '@poll*'
     createdAt (unique): '<dateTime()>'
 
