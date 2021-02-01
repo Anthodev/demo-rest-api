@@ -26,24 +26,39 @@ class Role
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(string)
+     * })
      */
     private string $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=16)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(string)
+     * })
      */
     private string $code;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 

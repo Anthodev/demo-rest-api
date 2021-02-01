@@ -24,24 +24,39 @@ class Answer
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(string)
+     * })
      */
     private string $name;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(int)
+     * })
      */
     private int $votes;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 

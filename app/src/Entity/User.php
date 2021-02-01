@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -28,36 +29,58 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(string)
+     * })
      */
     private string $username;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\All({
+     *     @Assert\Type(string)
+     * })
      */
     private ?string $plainPassword;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type(string)
+     * })
      */
     private string $password;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Email
+     * })
      */
     private string $email;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 
