@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Role
 {

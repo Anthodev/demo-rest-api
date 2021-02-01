@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PollRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Poll
 {
