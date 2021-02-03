@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Repository;
 
 use App\Entity\User;
+use App\EventListener\HashPassword;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger as DoctrineOrmPurger;
 use Doctrine\Persistence\ManagerRegistry;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class UserRepositoryTest extends KernelTestCase
 {
     private ManagerRegistry $doctrine;
+    private HashPassword $passwordEncoder;
 
     use FixturesTrait;
 
@@ -20,7 +22,8 @@ class UserRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
 
-        $this->doctrine = self::$kernel->getContainer()->get('doctrine');
+        $this->doctrine = self::$container->get('doctrine');
+        $this->passwordEncoder = self::$container->get('App\EventListener\HashPassword');
     }
 
     public function loadDb(): void
@@ -46,7 +49,7 @@ class UserRepositoryTest extends KernelTestCase
         $adminUser = $this->doctrine->getRepository(User::class)->findOneBy(['username' => 'admin']);
 
         $this->assertSame('admin@noreply.local', $adminUser->getEmail());
-        $this->assertSame('test1234', $adminUser->getPassword());
+        $this->assertEquals($this->passwordEncoder->encodePassword($adminUser, 'test1234'), $adminUser->getPassword());
         $this->assertSame('ROLE_ADMIN', $adminUser->getRole()->getCode());
         $this->assertEquals(new \DateTime() instanceof \DateTime, $adminUser->getCreatedAt() instanceof \DateTime);
 

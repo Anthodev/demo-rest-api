@@ -23,7 +23,7 @@ class HashPassword
             return;
         }
 
-        $this->encodePassword($user);
+        $this->encodePassword($user, $user->getPlainPassword());
     }
 
     public function preUpdate(LifecycleEventArgs $args): void
@@ -34,22 +34,24 @@ class HashPassword
             return;
         }
 
-        $this->encodePassword($user);
+        $this->encodePassword($user, $user->getPlainPassword());
     }
 
-    public function encodePassword(User $user): void
+    public function encodePassword(User $user, string $plainPassword = null): string|null
     {
-        if (!$user->getPlainPassword()) {
-            return;
+        if (!$plainPassword) {
+            return null;
         }
 
         $encoded = $this->passwordEncoder->encodePassword(
             $user,
-            $user->getPlainPassword()
+            $plainPassword
         );
 
         $user->setPassword($encoded);
 
         $user->eraseCredentials();
+
+        return $encoded;
     }
 }

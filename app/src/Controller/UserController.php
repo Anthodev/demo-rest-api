@@ -30,7 +30,7 @@ class UserController
      * @return JsonResponse
      */
     #[Route('', name: 'users_get', methods: ['GET'])]
-    public function allUsers(): JsonResponse
+    public function getAllUsers(): JsonResponse
     {
         $users = $this->userRepository->findAll();
 
@@ -42,7 +42,7 @@ class UserController
      * @return JsonResponse
      */
     #[Route('', name: 'user_create', methods: ['POST'])]
-    public function create(Request $request): JsonResponse
+    public function post(Request $request): JsonResponse
     {
         $data = null;
 

@@ -8,6 +8,8 @@ services:
       - db
     volumes:
       - ./app:/var/www/html:rw,cached
+    extra_hosts:
+      - "${PROJECT_HOST}:172.29.0.3"
     environment:
       APP_ENV: "${APP_DEV}"
       DATABASE_URL: "postgres://${DB_USER}:${DB_PWD}@${PROJECT_NAME}-db:5432/${DB_NAME}?sslmode=disable&charset=utf8"

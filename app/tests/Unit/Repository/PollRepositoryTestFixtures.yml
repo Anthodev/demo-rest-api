@@ -13,14 +13,14 @@ App\Entity\User:
   admin:
     username: 'admin'
     email: 'admin@noreply.local'
-    password: 'test1234'
+    plainPassword: 'test1234'
     role: '@role_admin'
     createdAt: '<dateTime()>'
   
   user{2..5}:
     username (unique): '<current()>'
     email (unique): '<email()>'
-    password: '<password()>'
+    plainPassword: '<password()>'
     role: '@role*'
     createdAt (unique): '<dateTime()>'
 
@@ -48,6 +48,7 @@ App\Entity\Poll:
     answers: '<numberBetween(1, 2)>x @answer*'
     totalVotes: '42'
     createdAt (unique): '<dateTime()>'
+  
   poll{2..10}:
     title: '<words(<randomDigitNotNull()>, true)>'
     question: '<sentence()>'
