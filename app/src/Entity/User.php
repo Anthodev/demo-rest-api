@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,12 +24,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_users"})
      */
     private ?int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
+     * @Groups({"get_users"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Type("string")
@@ -58,6 +61,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_users"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Email
@@ -87,6 +91,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
+     * @Groups({"get_users"})
      * @ORM\JoinColumn(nullable=false)
      */
     private Role $role;

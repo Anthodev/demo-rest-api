@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -27,14 +28,16 @@ class UserController
     }
 
     /**
-     * @return JsonResponse
+     * @return Response
      */
     #[Route('', name: 'users_get', methods: ['GET'])]
-    public function getAllUsers(): JsonResponse
+    public function getAllUsers(): Response
     {
         $users = $this->userRepository->findAll();
 
-        return new JsonResponse($users, 200);
+        $usersJson = $this->serializer->serialize($users, 'json', ['groups' => ['get_users']]);
+
+        return new Response($usersJson, 200);
     }
 
     /**

@@ -37,7 +37,7 @@ class HashPassword
         $this->encodePassword($user, $user->getPlainPassword());
     }
 
-    public function encodePassword(User $user, string $plainPassword = null): string|null
+    public function encodePassword(User $user, string $plainPassword = null): string | null
     {
         if (!$plainPassword) {
             return null;

@@ -13,13 +13,13 @@ App\Entity\User:
   admin:
     username: 'admin'
     email: 'admin@noreply.local'
-    plainPassword: 'test1234'
+    password: 'test1234'
     role: '@role_admin'
     createdAt: '<dateTime()>'
   
   user{2..5}:
     username (unique): '<current()>'
     email (unique): '<email()>'
-    plainPassword: '<password()>'
+    password: '<password()>'
     role: '@role*'
     createdAt (unique): '<dateTime()>'

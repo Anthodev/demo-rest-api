@@ -48,6 +48,9 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friends-of-behat/symfony-extension": "dev-master",
         "liip/test-fixtures-bundle": "^1.11",
+        "nelmio/alice": "^3.8",
+        "pestphp/pest": "^1.0",
+        "pestphp/pest-plugin-expectations": "^1.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^0.12.70",
         "phpstan/phpstan-doctrine": "^0.12.30",
@@ -63,7 +66,8 @@
         "symfony/var-dumper": "^5.2",
         "symfony/web-profiler-bundle": "^5.2",
         "symplify/easy-coding-standard": "^9.0",
-        "theofidry/alice-data-fixtures": "^1.4"
+        "theofidry/alice-data-fixtures": "^1.4",
+        "zenstruck/foundry": "^1.7"
     },
     "config": {
         "optimize-autoloader": true,
