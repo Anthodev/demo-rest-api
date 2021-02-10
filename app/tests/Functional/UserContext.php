@@ -9,6 +9,8 @@ use GuzzleHttp\Client;
 
 final class UserContext implements Context
 {
+    private mixed $response;
+
     public function __construct()
     {
     }
@@ -21,12 +23,12 @@ final class UserContext implements Context
     public function iAmAnUnauthenticatedUser(): bool
     {
         $client = new Client([
-            'base_uri' => 'https://api.localhost'
+            'base_uri' => 'https://api.localhost',
+            'verify' => false
         ]);
-        $response = $client->request('GET', '/api', [
-            'verify' => false,
-        ]);
-        $responseCode = $response->getStatusCode();
+
+        $this->response = $client->request('GET', '/api');
+        $responseCode = $this->response->getStatusCode();
 
         if ($responseCode != 200) {
             throw new \Exception('Not able to access');
@@ -43,11 +45,13 @@ final class UserContext implements Context
      */
     public function iRequestAListOfUsersFrom(string $arg1): bool
     {
-        $client = new Client(['base_uri' => 'https://api.localhost']);
-        $response = $client->request('GET', $arg1, [
+        $client = new Client([
+            'base_uri' => 'https://api.localhost',
             'verify' => false
         ]);
-        $responseCode = $response->getStatusCode();
+
+        $this->response = $client->request('GET', $arg1);
+        $responseCode = $this->response->getStatusCode();
 
         if ($responseCode != 200) {
             throw new \Exception('Not able to access');
@@ -61,6 +65,12 @@ final class UserContext implements Context
      */
     public function theResponseShouldBeInJson(): bool
     {
+        \json_decode($this->response->getBody()->getContents());
+
+        if (json_last_error() == JSON_ERROR_NONE) {
+            return true;
+        }
+
         return false;
     }
 
@@ -69,6 +79,10 @@ final class UserContext implements Context
      */
     public function theHeaderShouldBeEqualTo($arg1, $arg2): bool
     {
+        if ($this->response->getHeader($arg1) === $arg2) {
+            return true;
+        }
+
         return false;
     }
 }
