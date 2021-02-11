@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Factory\AnswerFactory;
 use App\Factory\PollFactory;
 use App\Factory\RoleFactory;
 use App\Factory\UserFactory;
-use App\Factory\AnswerFactory;
 
 beforeEach(function () {
     RoleFactory::new()->create([
@@ -29,7 +29,7 @@ beforeEach(function () {
     ]);
 });
 
-test('database has an answer', fn () => AnswerFactory::repository()->assertExists(array('name' => AnswerFactory::random()->getName())));
+test('database has an answer', fn () => AnswerFactory::repository()->assertExists(['name' => AnswerFactory::random()->getName()]));
 
 test('answer has a name and is string', fn () => expect(AnswerFactory::random()->getName())->toBeString());
 
