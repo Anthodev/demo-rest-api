@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Tests\Command\PasswordSameAssertion;
+use App\Tests\Helpers\PasswordSameAssertion;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /*
@@ -21,7 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 // uses()->in();
 // uses(Users::class)->in('Pest');
 uses(KernelTestCase::class, PasswordSameAssertion::class)->in('Unit');
-uses(KernelTestCase::class)->in('Command');
+uses(KernelTestCase::class)->in('Helpers');
 
 /*
 |--------------------------------------------------------------------------
