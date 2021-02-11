@@ -16,7 +16,7 @@ beforeEach(function () {
         ])->object()
     ])->object();
 
-    $this->users = UserFactory::createMany(4, [
+    UserFactory::createMany(4, [
         'role' => RoleFactory::findOrCreate([
             'name' => 'user',
             'code' => 'ROLE_USER'
@@ -44,9 +44,4 @@ test('verify user admin role', function () {
 
 it('check if all the users are in the database', function () {
     UserFactory::repository()->assertCount(5);
-});
-
-afterEach(function () {
-    UserFactory::repository()->truncate();
-    RoleFactory::repository()->truncate();
 });

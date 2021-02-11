@@ -8,7 +8,7 @@ use App\Factory\RoleFactory;
 use App\Factory\UserFactory;
 
 beforeEach(function () {
-    $this->userAdmin = UserFactory::new()->create([
+    UserFactory::new()->create([
         'username' => 'admin',
         'email' => 'admin@noreply.local',
         'plainPassword' => 'test1234',
@@ -18,7 +18,7 @@ beforeEach(function () {
         ])->object()
     ])->object();
 
-    $this->users = UserFactory::createMany(4, [
+    UserFactory::createMany(4, [
         'role' => RoleFactory::findOrCreate([
             'name' => 'user',
             'code' => 'ROLE_USER'
@@ -37,8 +37,3 @@ expect(RoleFactory::repository()->findOneBy(['code' => $code]))->not->toBeNull()
 test('find at least one user with the role', fn ($roleName) =>
 expect(UserFactory::random(['role' => RoleFactory::repository()->findOneBy(['name' => $roleName])])->object())->toBeInstanceOf(\App\Entity\User::class))
     ->with(['admin', 'user']);
-
-afterEach(function () {
-    UserFactory::repository()->truncate();
-    RoleFactory::repository()->truncate();
-});
