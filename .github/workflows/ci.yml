@@ -67,7 +67,7 @@ jobs:
 
         - name: Run phpunit for app
           working-directory: ./app
-          run: vendor/bin/simple-phpunit
+          run: vendor/bin/pest
 
         - name: Run coding standards checks
           working-directory: ./app
