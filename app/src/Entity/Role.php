@@ -8,9 +8,12 @@ use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=RoleRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Role
 {
@@ -19,30 +22,48 @@ class Role
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_users"})
      */
     private ?int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
+     * @Groups({"get_users"})
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=16)
+     * @Groups({"get_users"})
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $code;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 

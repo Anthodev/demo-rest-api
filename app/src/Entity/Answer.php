@@ -6,9 +6,11 @@ namespace App\Entity;
 
 use App\Repository\AnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnswerRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Answer
 {
@@ -23,24 +25,39 @@ class Answer
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $name;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("int")
+     * })
      */
     private int $votes;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 

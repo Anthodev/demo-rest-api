@@ -8,9 +8,11 @@ use App\Repository\PollRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PollRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Poll
 {
@@ -25,36 +27,58 @@ class Poll
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $title;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $question;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $endDate;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("bool")
+     * })
      */
     private bool $doUsersMustBeConnected;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 
@@ -80,6 +104,10 @@ class Poll
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("int")
+     * })
      */
     private int $totalVotes;
 

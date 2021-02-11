@@ -1,4 +1,13 @@
 {
+    "behat/behat": {
+        "version": "v3.8.1"
+    },
+    "behat/gherkin": {
+        "version": "v4.7.1"
+    },
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "doctrine/cache": {
         "version": "1.10.2"
     },
@@ -78,11 +87,41 @@
     "egulias/email-validator": {
         "version": "2.1.25"
     },
+    "facade/ignition-contracts": {
+        "version": "1.0.2"
+    },
     "fakerphp/faker": {
         "version": "v1.13.0"
     },
+    "filp/whoops": {
+        "version": "2.9.2"
+    },
+    "friends-of-behat/symfony-extension": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "3d21344765fd3440a85bdd27d4cada186ec628bd"
+        },
+        "files": [
+            "behat.yml.dist",
+            "config/services_test.yaml",
+            "features/demo.feature",
+            "tests/Behat/DemoContext.php"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "7.2.0"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.4.0"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.7.0"
     },
     "laminas/laminas-code": {
         "version": "4.0.0"
@@ -115,6 +154,30 @@
             "config/packages/test/nelmio_alice.yaml"
         ]
     },
+    "nunomaduro/collision": {
+        "version": "v5.3.0"
+    },
+    "pestphp/pest": {
+        "version": "v1.0.1"
+    },
+    "pestphp/pest-plugin": {
+        "version": "v1.0.0"
+    },
+    "pestphp/pest-plugin-coverage": {
+        "version": "v1.0.0"
+    },
+    "pestphp/pest-plugin-expectations": {
+        "version": "v1.0.1"
+    },
+    "pestphp/pest-plugin-init": {
+        "version": "v1.0.0"
+    },
+    "phar-io/manifest": {
+        "version": "2.0.1"
+    },
+    "phar-io/version": {
+        "version": "3.0.4"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -124,17 +187,94 @@
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
     },
+    "phpspec/prophecy": {
+        "version": "1.12.2"
+    },
+    "phpunit/php-code-coverage": {
+        "version": "9.2.5"
+    },
+    "phpunit/php-file-iterator": {
+        "version": "3.0.5"
+    },
+    "phpunit/php-invoker": {
+        "version": "3.1.1"
+    },
+    "phpunit/php-text-template": {
+        "version": "2.0.4"
+    },
+    "phpunit/php-timer": {
+        "version": "5.0.3"
+    },
+    "phpunit/phpunit": {
+        "version": "4.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.7",
+            "ref": "477e1387616f39505ba79715f43f124836020d71"
+        },
+        "files": [
+            ".env.test",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "sebastian/cli-parser": {
+        "version": "1.0.1"
+    },
+    "sebastian/code-unit": {
+        "version": "1.0.8"
+    },
+    "sebastian/code-unit-reverse-lookup": {
+        "version": "2.0.3"
     },
     "sebastian/comparator": {
         "version": "4.0.6"
     },
+    "sebastian/complexity": {
+        "version": "2.0.2"
+    },
+    "sebastian/environment": {
+        "version": "5.1.3"
+    },
     "sebastian/exporter": {
         "version": "4.0.3"
     },
+    "sebastian/global-state": {
+        "version": "5.0.2"
+    },
+    "sebastian/lines-of-code": {
+        "version": "1.0.3"
+    },
+    "sebastian/object-enumerator": {
+        "version": "4.0.4"
+    },
+    "sebastian/object-reflector": {
+        "version": "2.0.4"
+    },
     "sebastian/recursion-context": {
         "version": "4.0.4"
+    },
+    "sebastian/resource-operations": {
+        "version": "3.0.3"
+    },
+    "sebastian/type": {
+        "version": "2.3.1"
+    },
+    "sebastian/version": {
+        "version": "3.0.2"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -425,6 +565,9 @@
             "ref": "fe5a50faf580eb58f08ada2abe8afbd2d4941e05"
         }
     },
+    "theseer/tokenizer": {
+        "version": "1.2.0"
+    },
     "twig/extra-bundle": {
         "version": "v3.2.1"
     },
@@ -433,5 +576,11 @@
     },
     "webmozart/assert": {
         "version": "1.9.1"
+    },
+    "zenstruck/callback": {
+        "version": "v1.2.0"
+    },
+    "zenstruck/foundry": {
+        "version": "v1.7.0"
     }
 }

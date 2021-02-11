@@ -8,60 +8,90 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int|null
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"get_users"})
      */
     private ?int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
+     * @Groups({"get_users"})
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $username;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\All({
+     *     @Assert\Type("string")
+     * })
      */
     private ?string $plainPassword;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Type("string")
+     * })
      */
     private string $password;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Groups({"get_users"})
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\Email
+     * })
      */
     private string $email;
 
     /**
      * @var \DateTimeInterface
      * @ORM\Column(type="datetime")
+     * @Assert\All({
+     *     @Assert\NotBlank,
+     *     @Assert\DateTime
+     * })
      */
     private \DateTimeInterface $createdAt;
 
     /**
      * @var \DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\All({
+     *     @Assert\DateTime
+     * })
      */
     private ?\DateTimeInterface $updatedAt;
 
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
+     * @Groups({"get_users"})
      * @ORM\JoinColumn(nullable=false)
      */
     private Role $role;
@@ -173,6 +203,11 @@ class User
         return $this;
     }
 
+    public function getRoles()
+    {
+        return [$this->getRole()->getCode()];
+    }
+
     /**
      * @return Collection|Poll[]
      */
@@ -228,5 +263,44 @@ class User
         }
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
+    }
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ]);
+    }
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
