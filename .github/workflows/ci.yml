@@ -65,7 +65,7 @@ jobs:
           run: |
             composer install --no-progress --prefer-dist --optimize-autoloader
 
-        - name: Run phpunit for app
+        - name: Run pest for app
           working-directory: ./app
           run: vendor/bin/pest
 
