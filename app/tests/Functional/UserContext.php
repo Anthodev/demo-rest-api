@@ -23,7 +23,7 @@ final class UserContext implements Context
     public function iAmAnUnauthenticatedUser(): bool
     {
         $client = new Client([
-            'base_uri' => 'https://api.localhost',
+            'base_uri' => 'http://localhost',
             'verify' => false
         ]);
 
@@ -46,7 +46,7 @@ final class UserContext implements Context
     public function iRequestAListOfUsersFrom(string $arg1): bool
     {
         $client = new Client([
-            'base_uri' => 'https://api.localhost',
+            'base_uri' => 'http://localhost',
             'verify' => false
         ]);
 
