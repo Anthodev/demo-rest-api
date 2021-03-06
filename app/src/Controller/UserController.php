@@ -170,7 +170,7 @@ class UserController
         User $user,
         Request $request
     ): JsonResponse {
-        if (!$user) {
+        if ($user !== null) {
             new JsonResponse('User not found', 404);
         }
 
