@@ -51,21 +51,21 @@ beforeEach(
 
 test(
     'find a poll in the database',
-    fn() => PollFactory::repository()->assertExists(['title' => PollFactory::random()->getTitle()])
+    fn () => PollFactory::repository()->assertExists(['title' => PollFactory::random()->getTitle()])
 );
 
 test(
     'poll has a title',
-    fn() => expect(PollFactory::random()->getTitle())->not->toBeNull()->and(
+    fn () => expect(PollFactory::random()->getTitle())->not->toBeNull()->and(
         PollFactory::random()->getTitle()
     )->toBeString()
 );
 
-test('poll has answers', fn() => assertContainsOnly(Answer::class, PollFactory::random()->getAnswers()));
+test('poll has answers', fn () => assertContainsOnly(Answer::class, PollFactory::random()->getAnswers()));
 
 test(
     'poll has a question and is a string',
-    fn() => expect(PollFactory::random()->getQuestion())->not->toBeNull()->and(
+    fn () => expect(PollFactory::random()->getQuestion())->not->toBeNull()->and(
         PollFactory::random()->getQuestion()
     )->toBeString()
 );
@@ -85,14 +85,14 @@ test(
 
 test(
     'doUsersMustBeConnected is a bool',
-    fn() => expect(PollFactory::random()->getDoUsersMustBeConnected())->toBeBool()
+    fn () => expect(PollFactory::random()->getDoUsersMustBeConnected())->toBeBool()
 );
 
-test('poll has an owner', fn() => expect(PollFactory::random()->getOwner())->not->toBeNull());
+test('poll has an owner', fn () => expect(PollFactory::random()->getOwner())->not->toBeNull());
 
 test(
     'poll has participants',
-    fn() => assertContainsOnly(User::class, PollFactory::random()->getParticipants())
+    fn () => assertContainsOnly(User::class, PollFactory::random()->getParticipants())
 );
 
-test('totalVotes is int', fn() => expect(PollFactory::random()->getTotalVotes())->toBeInt());
+test('totalVotes is int', fn () => expect(PollFactory::random()->getTotalVotes())->toBeInt());
