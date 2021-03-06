@@ -24,14 +24,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      */
     private ?int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Type("string")
@@ -61,7 +61,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Email
@@ -91,7 +91,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Role
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="users")
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      * @ORM\JoinColumn(nullable=false)
      */
     private Role $role;
@@ -288,6 +288,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->role,
             // see section on salt below
             // $this->salt,
         ]);
@@ -299,6 +300,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->role,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized, ['allowed_classes' => false]);

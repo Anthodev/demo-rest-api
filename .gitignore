@@ -8,3 +8,7 @@
 !build/
 /.idea
 app/docker/db/data
+
+###> PHPStorm debug ###
+/.run/
+###< PHPStorm debug ###
