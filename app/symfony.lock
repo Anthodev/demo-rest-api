@@ -1,13 +1,4 @@
 {
-    "behat/behat": {
-        "version": "v3.8.1"
-    },
-    "behat/gherkin": {
-        "version": "v4.7.1"
-    },
-    "behat/transliterator": {
-        "version": "v1.3.0"
-    },
     "doctrine/cache": {
         "version": "1.10.2"
     },
@@ -95,21 +86,6 @@
     },
     "filp/whoops": {
         "version": "2.9.2"
-    },
-    "friends-of-behat/symfony-extension": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.0",
-            "ref": "3d21344765fd3440a85bdd27d4cada186ec628bd"
-        },
-        "files": [
-            "behat.yml.dist",
-            "config/services_test.yaml",
-            "features/demo.feature",
-            "tests/Behat/DemoContext.php"
-        ]
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"

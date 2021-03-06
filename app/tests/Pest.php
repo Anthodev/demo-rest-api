@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Tests;
 
 use App\Tests\Helpers\PasswordSameAssertion;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Zenstruck\Foundry\Test\ResetDatabase;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +22,8 @@ use App\Tests\Helpers\PasswordSameAssertion;
 
 // uses()->in();
 // uses(Users::class)->in('Pest');
-uses(KernelTestCase::class, PasswordSameAssertion::class)->in('Unit');
+uses(KernelTestCase::class, PasswordSameAssertion::class, ResetDatabase::class)->in('Unit');
+uses(WebTestCase::class, ResetDatabase::class)->in('Functional');
 uses(KernelTestCase::class)->in('Helpers');
 
 /*

@@ -8,15 +8,16 @@ services:
       - db
     volumes:
       - ./app:/var/www/html:rw,cached
-    extra_hosts:
-      - "${PROJECT_HOST}:172.29.0.3"
     environment:
       APP_ENV: "${APP_DEV}"
+      PHP_IDE_CONFIG: "serverName=${PROJECT_NAME}"
       DATABASE_URL: "postgres://${DB_USER}:${DB_PWD}@${PROJECT_NAME}-db:5432/${DB_NAME}?sslmode=disable&charset=utf8"
       PHP_EXTENSIONS: "pdo_pgsql pgsql pdo_sqlite sqlite3 gd intl xdebug"
       PHP_INI_MEMORY_LIMIT: -1
-      # PHP_EXTENSION_XDEBUG: 1
-      # PHP_INI_XDEBUG__REMOTE_AUTOSTART: 1
+      PHP_INI_XDEBUG__MODE: "debug"
+      PHP_INI_XDEBUG__CLIENT_PORT: 9003
+      PHP_INI_XDEBUG__IDEKEY: "PHPSTORM"
+      PHP_EXTENSION_XDEBUG: 1
 
       STARTUP_COMMAND_1: composer install --optimize-autoloader
       STARTUP_COMMAND_2: echo 'alias sf="php bin/console"' >> ~/.bashrc
@@ -57,7 +58,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PWD}
     volumes:
-      - ./app/docker/db/data:/var/lib/postgresql/data:rw
+      - db_data:/var/lib/postgresql/data:rw
     restart: unless-stopped
 
 volumes:

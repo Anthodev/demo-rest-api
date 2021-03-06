@@ -44,9 +44,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
-        "behat/behat": "^3.8",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "friends-of-behat/symfony-extension": "dev-master",
         "liip/test-fixtures-bundle": "^1.11",
         "nelmio/alice": "^3.8",
         "pestphp/pest": "^1.0",

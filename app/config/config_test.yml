@@ -1,7 +1,8 @@
 doctrine:
   dbal:
     default_connection: default
+    url: 'sqlite:///%kernel.cache_dir%/test.sqlite'
     connections:
       default:
         driver:   pdo_sqlite
-        path:     "%kernel.cache_dir%/test.db"
+        path:     "%kernel.cache_dir%/test.sqlite"

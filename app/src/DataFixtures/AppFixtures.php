@@ -10,9 +10,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
         $loader = new NativeLoader();
 
         $objectSet = $loader->loadFile(

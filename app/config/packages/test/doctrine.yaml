@@ -1,5 +1,8 @@
+parameters:
+    env(DATABASE_URL): 'sqlite:///%kernel.cache_dir%/test.sqlite'
+
 doctrine:
   dbal:
     driver: pdo_sqlite
-    path: "%kernel.cache_dir%/test.db"
+    path: "%kernel.cache_dir%/test.sqlite"
     url: null

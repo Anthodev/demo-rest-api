@@ -34,3 +34,8 @@ parameters:
             message: '#Undefined variable: \$this#'
             paths:
                 - tests/*/*PestTest.php
+        -
+            # static methods not handled well by phpstan in Pest test files
+            message: '#Calling static::createClient\(\) outside of class scope.#'
+            paths:
+                - tests/Functional/*PestTest.php

@@ -22,14 +22,14 @@ class Role
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      */
     private ?int $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=32)
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Type("string")
@@ -40,7 +40,7 @@ class Role
     /**
      * @var string
      * @ORM\Column(type="string", length=16)
-     * @Groups({"get_users"})
+     * @Groups({"get_users", "get_user"})
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\Type("string")
