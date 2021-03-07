@@ -10,6 +10,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use function json_decode;
 
 #[Route('/user')]
-class UserController
+class UserController extends AbstractController
 {
     public function __construct(
         private UserRepository $userRepository,
@@ -35,6 +36,8 @@ class UserController
     #[Route('', name: 'users_get', methods: ['GET'])]
     public function getAllUsers(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
+
         $users = $this->userRepository->findAll();
 
         $usersJson = $this->serializer->serialize($users, 'json', ['groups' => ['get_users']]);
@@ -44,13 +47,15 @@ class UserController
 
     /**
      *
-     * @param User $user
+     * @param User|string $user
      * @return Response
      */
     #[Route('/{id}', name: 'user_get', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function get(
-        User $user
+        User|string $user
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
+
         $userJson = $this->serializer->serialize($user, 'json', ['groups' => ['get_user']]);
 
         return new Response($userJson, 200);
@@ -122,12 +127,19 @@ class UserController
      * @param Request $request
      * @return Response
      * @throws Exception
+     *
      */
     #[Route('/{id}', name: 'user_edit', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function put(
         User $user,
         Request $request
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
+
+        if ($this->getUser()->getRole()->getCode() !== 'ROLE_ADMIN' && $this->getUser() !== $user) {
+            throw new Exception('User not authorized');
+        }
+
         $data = null;
         $decodedData = null;
         $userJson = null;
@@ -164,12 +176,15 @@ class UserController
      * @param Request $request
      * @return JsonResponse
      * @throws Exception
+     *
      */
     #[Route('/{id}', name: 'user_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(
         User $user,
         Request $request
     ): JsonResponse {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You're not authorized to see this page");
+
         if ($user == null) {
             new JsonResponse('User not found', 404);
         }
