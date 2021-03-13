@@ -134,12 +134,6 @@ class UserController extends AbstractController
         User $user,
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
-
-        if ($this->getUser()->getRole()->getCode() !== 'ROLE_ADMIN' && $this->getUser() !== $user) {
-            throw new Exception('User not authorized');
-        }
-
         $data = null;
         $decodedData = null;
         $userJson = null;
@@ -183,8 +177,6 @@ class UserController extends AbstractController
         User $user,
         Request $request
     ): JsonResponse {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You're not authorized to see this page");
-
         if ($user == null) {
             new JsonResponse('User not found', 404);
         }
