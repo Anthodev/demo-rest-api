@@ -11,6 +11,9 @@ env:
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_USER: ${{ secrets.DB_USER }}
   DB_PWD: ${{ secrets.DB_PWD }}
+  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+  JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
+  JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
 
 jobs:
   tests:
