@@ -10,6 +10,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use function json_decode;
 
 #[Route('/user')]
-class UserController
+class UserController extends AbstractController
 {
     public function __construct(
         private UserRepository $userRepository,
@@ -44,12 +45,12 @@ class UserController
 
     /**
      *
-     * @param User $user
+     * @param User|string $user
      * @return Response
      */
     #[Route('/{id}', name: 'user_get', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function get(
-        User $user
+        User|string $user
     ): Response {
         $userJson = $this->serializer->serialize($user, 'json', ['groups' => ['get_user']]);
 
@@ -122,6 +123,7 @@ class UserController
      * @param Request $request
      * @return Response
      * @throws Exception
+     *
      */
     #[Route('/{id}', name: 'user_edit', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function put(
@@ -164,6 +166,7 @@ class UserController
      * @param Request $request
      * @return JsonResponse
      * @throws Exception
+     *
      */
     #[Route('/{id}', name: 'user_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(

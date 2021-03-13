@@ -1,41 +1,50 @@
 security:
-    encoders:
-        App\Entity\User:
-            algorithm: auto
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        api_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        login:
-            pattern: ^/api/auth/login
-            stateless: true
-            anonymous: true
-            provider: api_user_provider
-        main:
-            pattern: ^/api
-            anonymous: true
-            lazy: true
-            stateless: true
-            provider: api_user_provider
+  encoders:
+    App\Entity\User:
+      algorithm: auto
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    api_user_provider:
+      entity:
+        class: App\Entity\User
+        property: username
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+  enable_authenticator_manager: true
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    login:
+      pattern: ^/api/auth/login
+      stateless: true
+      provider: api_user_provider
+      json_login:
+        check_path: api_login_check
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+    main:
+      pattern: ^/api
+      lazy: true
+      stateless: true
+      entry_point: lexik_jwt_authentication.jwt_token_authenticator
+      provider: api_user_provider
+      guard:
+        authenticators:
+          - lexik_jwt_authentication.jwt_token_authenticator
 
-    role_hierarchy:
-        ROLE_USER: ROLE_USER
-        ROLE_ADMIN: ROLE_ADMIN
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
+
+  role_hierarchy:
+    ROLE_USER: ROLE_USER
+    ROLE_ADMIN: ROLE_USER
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+  # - { path: ^/admin, roles: ROLE_ADMIN }
+  # - { path: ^/profile, roles: ROLE_USER }

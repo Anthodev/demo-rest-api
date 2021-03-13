@@ -11,66 +11,73 @@ env:
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_USER: ${{ secrets.DB_USER }}
   DB_PWD: ${{ secrets.DB_PWD }}
+  JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+  JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
+  JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
 
 jobs:
-    tests:
-      runs-on: ubuntu-latest
+  tests:
+    runs-on: ubuntu-latest
 
-      services:
-        postgres:
-          image: postgres
-          env:
-            POSTGRES_DB: $DB_NAME
-            POSTGRES_USER: $DB_USER
-            POSTGRES_PASSWORD: $DB_PWD
-          ports:
-            - 5432:5432
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: $DB_NAME
+          POSTGRES_USER: $DB_USER
+          POSTGRES_PASSWORD: $DB_PWD
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-      env:
-        DATABASE_URL: postgres://$DB_USER:$DB_PWD@localhost:5432/$DB_NAME?sslmode=disable&charset=utf8
+    env:
+      DATABASE_URL: postgres://$DB_USER:$DB_PWD@localhost:5432/$DB_NAME?sslmode=disable&charset=utf8
 
-      steps:
-        - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-        - name: Setup PHP, extensions and composer with shivammathur/setup-php
-          uses: shivammathur/setup-php@v2
-          with:
-            php-version: '8.0'
-            extensions: mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, pdo, pgsql
-            tools: composer:v2, phpunit:9.5, phpstan
-          env:
-            update: true
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, xml, ctype, iconv, intl, dom, filter, gd, iconv, json, pdo, pgsql
+          tools: composer:v2, phpunit:9.5, phpstan
+        env:
+          update: true
 
-        # - name: Validate composer.json and composer.lock
-        #   working-directory: ./AccountService
-        #   run: |
-        #     composer validate
+      # - name: Validate composer.json and composer.lock
+      #   working-directory: ./AccountService
+      #   run: |
+      #     composer validate
 
-        - name: Cache Composer packages
-          id: composer-cache
-          uses: actions/cache@v2
-          with:
-            working_dir: ./app
-            path: vendor
-            key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-php-
-        - name: Install dependencies
-          working-directory: ./app
-          run: |
-            composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          working_dir: ./app
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        working-directory: ./app
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
 
-        - name: Run pest for app
-          working-directory: ./app
-          run: vendor/bin/pest
+      - name: Generate keypair for lexik
+        working-directory: ./app
+        run: php bin/console lexik:jwt:generate-keypair
 
-        - name: Run coding standards checks
-          working-directory: ./app
-          run: |
-            vendor/bin/phpstan analyse
-            vendor/bin/ecs check
+      - name: Run pest for app
+        working-directory: ./app
+        run: vendor/bin/pest
+
+      - name: Run coding standards checks
+        working-directory: ./app
+        run: |
+          vendor/bin/phpstan analyse
+          vendor/bin/ecs check

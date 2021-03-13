@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
+use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="`user`")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, Serializable
 {
     /**
      * @var int|null
@@ -70,23 +73,23 @@ class User implements UserInterface, \Serializable
     private string $email;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      * @ORM\Column(type="datetime")
      * @Assert\All({
      *     @Assert\NotBlank,
      *     @Assert\DateTime
      * })
      */
-    private \DateTimeInterface $createdAt;
+    private DateTimeInterface $createdAt;
 
     /**
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\All({
      *     @Assert\DateTime
      * })
      */
-    private ?\DateTimeInterface $updatedAt;
+    private ?DateTimeInterface $updatedAt;
 
     /**
      * @var Role
@@ -108,7 +111,7 @@ class User implements UserInterface, \Serializable
      */
     private Collection $pollsParticipated;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->polls = new ArrayCollection();
         $this->pollsParticipated = new ArrayCollection();
@@ -167,28 +170,33 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getRoles()
+    {
+        return [$this->getRole()->getCode()];
     }
 
     public function getRole(): ?Role
@@ -201,11 +209,6 @@ class User implements UserInterface, \Serializable
         $this->role = $role;
 
         return $this;
-    }
-
-    public function getRoles()
-    {
-        return [$this->getRole()->getCode()];
     }
 
     /**
@@ -273,6 +276,7 @@ class User implements UserInterface, \Serializable
         // not needed when using the "bcrypt" algorithm in security.yaml
         return null;
     }
+
     /**
      * @see UserInterface
      */
@@ -281,19 +285,25 @@ class User implements UserInterface, \Serializable
         // If you store any temporary, sensitive data on the user, clear it here
         $this->plainPassword = null;
     }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->role,
-            // see section on salt below
-            // $this->salt,
-        ]);
+        return serialize(
+            [
+                $this->id,
+                $this->username,
+                $this->password,
+                $this->role,
+                // see section on salt below
+                // $this->salt,
+            ]
+        );
     }
-    /** @see \Serializable::unserialize() */
+
+    /** @param $serialized
+     * @see \Serializable::unserialize()
+     */
     public function unserialize($serialized)
     {
         list(
@@ -303,6 +313,6 @@ class User implements UserInterface, \Serializable
             $this->role,
             // see section on salt below
             // $this->salt
-        ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 }
