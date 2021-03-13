@@ -36,8 +36,6 @@ class UserController extends AbstractController
     #[Route('', name: 'users_get', methods: ['GET'])]
     public function getAllUsers(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
-
         $users = $this->userRepository->findAll();
 
         $usersJson = $this->serializer->serialize($users, 'json', ['groups' => ['get_users']]);
@@ -54,8 +52,6 @@ class UserController extends AbstractController
     public function get(
         User|string $user
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, "You're not authorized to see this page");
-
         $userJson = $this->serializer->serialize($user, 'json', ['groups' => ['get_user']]);
 
         return new Response($userJson, 200);
